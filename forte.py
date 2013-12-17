@@ -3,21 +3,13 @@ from __future__ import with_statement
 from sqlite3 import dbapi2 as sqlite3
 from flask_mail import Mail, Message
 from contextlib import closing
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
-import string, random
-
-# configuration
-DATABASE = 'forte.db'
-DEBUG = True
-SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'default'
-
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+import string, random, socket, logging
 
 # create our little application :)
 app = Flask(__name__)
-app.config.from_object(__name__)
+app.config.from_object('development_config')
+app.config.from_envvar('FORTE_CONFIG')
 mail = Mail(app)
 
 def connect_db():
@@ -50,7 +42,11 @@ def index():
 def new_playlist():
   error = None
   if request.method ==  'POST':
-    playlist_hash = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for x in range(8))
+    unique = 0
+    while unique == 0:
+      playlist_hash = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for x in range(8))
+      if len(g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()) == 0:
+        unique = 1
     g.db.execute('insert into playlists (name, description, hash) values (?, ?, ?)',
                  [request.form['name'], request.form['description'], playlist_hash])
     g.db.commit()
@@ -62,7 +58,8 @@ def new_playlist():
                     recipients=emails)
       # Check for hostname rather than doing this
       # Add a nicer message
-      msg.body = "http://localhost:5000/" + playlist_hash
+      print app.config
+      msg.body = "http://" + app.config['SERVER_NAME'] + "/" + playlist_hash
       mail.send(msg)
 
     flash('New playlist was created')
@@ -103,5 +100,9 @@ def downvote_song(playlist_hash, song_id):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run()
+    if not app.debug:
+      file_handler = logging.FileHandler(filename="logs/production.log")
+      app.logger.setLevel(logging.WARNING)
+      app.logger.addHandler(file_handler)
+    app.run(host="0.0.0.0")
 

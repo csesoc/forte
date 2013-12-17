@@ -84,12 +84,8 @@
           <i>by</i> {{ song.artist }}
         </div>
         <div class="large-1 columns">
-        <!-- <form method="POST", action="/playlists/{{ playlist.hash }}/{{ song.id }}/up"> -->
           <button id="up_{{ song.id }}" type="submit" class="insanelysmall button" style="margin:0" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', {{ song.votes }})"><i class="fi-like"></i></button><br />
-        <!-- </form> -->
-        <!-- <form method="POST", action="/playlists/{{ playlist.hash }}/{{ song.id }}/down"> -->
           <button id="down_{{ song.id }}"type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', {{ song.votes }}  )"><i class='fi-dislike'></i></button>
-        <!-- </form> -->
         <p id="votes_{{ song.id }}">
           {{ song.votes }}
         </p>     

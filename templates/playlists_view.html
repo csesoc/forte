@@ -1,4 +1,5 @@
 {% extends "layout.html" %} 
+
 {% block title %}
   {{ playlist.name }}
 {% endblock %}
@@ -6,49 +7,86 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <h1> Playlist view </h1>
-  {{ playlist.name }}
-  <br/>
-  {{ playlist.description }}
-  <br/>
 
-  <h2> Add a new song</h2>
-  <form method="POST">
-    <label for="name">Name: </label>
-    <input type="text" name="name" placeholder="Song name..." />
-    <br/>
-    <label for="artist">Artist: </label>
-    <input type="text" name="artist" placeholder="Song artist..." />
-    <br/>
-    <label for="youtube">Youtube link: </label>
-    <input type="text" name="youtube" placeholder="Youtube link..." />
-    <input type="submit" value="Add!" />
-  </form>
+<div class="row" style="margin-top:20px">
+  <div class="large-12 columns">
+  <h2> View Playlist </h2>
+  Name: {{ playlist.name }}
+  <br/>
+  Description: {{ playlist.description }}
+  <br/>
+</div></div>
+
+<div class="row" style="margin-top:20px">
+  <div class="large-12 columns">
+    <h3>Suggest Songs:</h3>
+    <form method="POST">
+      <div class="panel">
+        <div class="row">
+          <div class="large-12 columns">
+            <div class="row">
+              <div class="large-6 columns">
+                <input type="text" name="name" placeholder="Song name..." />
+              </div>
+              <div class="large-6 columns">
+                <input type="text" name="artist" placeholder="Song artist..." />
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-10 columns">
+                <input type="text" name="youtube" placeholder="Youtube link..." style="margin-bottom:0">
+              </div>
+              <div class="large-2 columns">
+                <input type="submit" class="button postfix" style="margin:0" value="Add">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="large-12 medium-12 columns">
   {% if songs %}
-  <table>
-    <tbody>
-      <tr>
-        <th> Youtube link </th>
-        <th> Song </th>
-        <th> Votes </th>
-      </tr>
-      {% for song in songs %}
-      <tr>
-        <td><iframe width="560" height="315" src="{{ song.youtube }}" frameborder="0" allowfullscreen></iframe></td>
-        <td> {{ song.name }} by {{ song.artist }} </td>
-        <td> {{ song.votes }} 
-          <form method="POST", action="/playlists/{{ playlist.hash }}/{{ song.id }}/up">
-            <input type="submit" value="Upvote"/>
-          </form>
-          <form method="POST", action="/playlists/{{ playlist.hash }}/{{ song.id }}/down">
-            <input type="submit" value="Downvote"/>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <h3>Songs:</h3>
+
+    {% for song in songs %}
+    <div class="panel">
+      <div class="row">
+        <div class="large-2 columns">
+          <div class="flex-video">
+            <object width= "560" height="315"><param name="movie" value="{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0"></param><param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param><embed src="{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed></object>
+          </div>      
+        </div>
+        <div class="large-9 columns">
+          <h4>{{ song.name }}</h4>
+          <i>by</i> {{ song.artist }}
+        </div>
+        <div class="large-1 columns">
+        <form method="POST", action="/playlists/{{ playlist.hash }}/{{ song.id }}/up">
+          <button type="submit" class="insanelysmall button" style="margin:0"><i class="fi-like"></i></button><br />
+        </form>
+        <form method="POST", action="/playlists/{{ playlist.hash }}/{{ song.id }}/down">
+          <button type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;"><i class='fi-dislike'></i></button>
+        </form>
+        {{ song.votes }}     
+        </div>
+      </div>       
+    </div>
+    {% endfor %}
+
+
+
+  </div>
+</div>
   {% else %}
-  <h1> No songs :( </h1>
+  <h2> No songs :( </h2>
   {% endif %}
+  </div>
+  </div>
 {% endblock %}

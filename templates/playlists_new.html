@@ -5,7 +5,9 @@
 
 {% endblock %}
 {% block content %}
-<h1> New playlist </h1>
+<div class="row" style="margin-top:20px">
+      <div class="large-12 columns">
+<h2> New playlist </h2>
 <form method="post" >
   <label for="name">Name:</label>
   <input type="text" name="name" placeholder="Playlist name..."/>
@@ -17,4 +19,6 @@
   <input type="text" name="email" placeholder="Email address..."/>
   <input type="submit" value="Create">
 </form>
+</div>
+</div>
 {% endblock %}

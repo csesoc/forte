@@ -8,33 +8,43 @@
 {% endblock %}
 {% block content %}
 
-<div class="row" style="margin-top:20px">
+<div class="row">
   <div class="large-12 columns">
-  <h2> View Playlist </h2>
-  Name: {{ playlist.name }}
-  <br/>
-  Description: {{ playlist.description }}
-  <br/>
+  <h2> {{ playlist.name }} </h2>
+  {% if playlist.description %}
+  <div class="panel">
+  <p>{{ playlist.description }}</p>
+  </div>
+  {% endif %}
 </div></div>
 
 <div class="row" style="margin-top:20px">
   <div class="large-12 columns">
-    <h3>Suggest Songs:</h3>
-    <form method="POST">
+    <h4>Suggest Songs:</h4>
+    <form method="POST" data-abide>
       <div class="panel">
         <div class="row">
           <div class="large-12 columns">
             <div class="row">
               <div class="large-6 columns">
-                <input type="text" name="name" placeholder="Song name..." />
+              <div class="input-wrapper">
+                <input type="text" name="name" placeholder="Song name..." required/>
+                <small class="error">You must include a name.</small>
+                </div>
               </div>
               <div class="large-6 columns">
-                <input type="text" name="artist" placeholder="Song artist..." />
+              <div class="input-wrapper">
+                <input type="text" name="artist" placeholder="Song artist..." required/>
+                <small class="error">You must include an artist.</small>
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="large-10 columns">
-                <input type="text" name="youtube" placeholder="Youtube link..." style="margin-bottom:0">
+              <div class="input-wrapper">
+                <input type="text" name="youtube" placeholder="Youtube link..." style="margin-bottom:0" required pattern="youtube">
+                <small class="error">You must include a youtube link in the format http://www.youtube.com/watch?v=VIDEOID</small>
+                </div>
               </div>
               <div class="large-2 columns">
                 <input type="submit" class="button postfix" style="margin:0" value="Add">
@@ -52,16 +62,22 @@
 
 <div class="row">
   <div class="large-12 medium-12 columns">
-  {% if songs %}
+  
     <h3>Songs:</h3>
-
+{% if songs %}
     {% for song in songs %}
     <div class="panel">
       <div class="row">
-        <div class="large-2 columns">
+        <div class="large-2 columns text-center">
+          {% if song.youtube %}
           <div class="flex-video">
-            <object width= "560" height="315"><param name="movie" value="{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0"></param><param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param><embed src="{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed></object>
-          </div>      
+            <object width= "560" height="315"><param name="movie" value="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0"></param><param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param><embed src="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed></object>
+          </div>
+          {% else %}
+
+          <i class="fi-play-video" style="font-size:7rem"></i>
+
+          {% endif %}      
         </div>
         <div class="large-9 columns">
           <h4>{{ song.name }}</h4>
@@ -85,7 +101,9 @@
   </div>
 </div>
   {% else %}
-  <h2> No songs :( </h2>
+  <div class="panel">
+  <h5>Be the first to add a song.</h5>
+  </div>
   {% endif %}
   </div>
   </div>

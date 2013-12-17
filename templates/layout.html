@@ -7,46 +7,53 @@
     <title>Forte - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/foundation.css" />
     <link rel="stylesheet" href="/static/css/foundation-icons.css" />
+    <link rel="stylesheet" href="/static/css/main.css" />
     <script src="/static/js/modernizr.js"></script>
-    <style type="text/css">
-    .insanelysmall {
-      padding-top: 0.3rem;
-      padding-right: 1.25rem;
-      padding-bottom: 0.3rem;
-      padding-left: 1.25rem;
-      font-size: 1rem;
-    }
-
-    .flex-video {
-      margin-bottom: 0;
-    }
-    form {
-      margin:0;
-    }
-    </style>
     {% endblock %}
   </head>
   <body>
-    <div class="row">
-      <div class="large-12 columns">
-          <h1 style="display:inline-block;padding-right:50px">Forte</h1>
+    <div class="wrapper">
+      <div class="row">
+        <div class="small-5 columns">
+          <a href="/"><h1>Forte</h1></a>
         </div>
-      <hr>
-    </div>
-    {% block content %}
+        <div class="small-7 columns text-right show-for-small-only">
+          <a href="/playlists/new" class="button tiny" style="margin-bottom: 13px;margin-top: 12px;">Create a Playlist</a>
+        </div>
+        <div class="small-7 columns text-right hide-for-small-only">
+          <a href="/playlists/new" class="button tiny" style="margin-bottom: 10px;margin-top: 18px;">Create a Playlist</a>
+        </div>
+        <hr>
+      </div>
 
-    {% endblock %}
-    
-    <div class="row">
-    <hr>
-      <div class="large-12 columns text-center">
-      <small>Forte by CSESoc Dev Team for ARC Yellow Shirts. &copy; 2013 CSESoc</small>
+      {% block content %}
+      {% endblock %}
+
+      <div class="push"></div>
+    </div>
+    <div class="footer">
+      <div class="row">
+        <hr>
+        <div class="large-12 columns text-center">
+          <small>Forte by CSESoc Dev Team for ARC Yellow Shirts. &copy; 2013 CSESoc</small>
+        </div>
       </div>
     </div>
+
+
+
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/foundation.min.js"></script>
     <script>
       $(document).foundation();
+      $(document).foundation('abide', {
+        patterns: {
+          dashes_only: /^[0-9-]*$/,
+          ip_address: /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$/,
+          youtube: /http:\/\/www.youtube.com\/watch\?v=[A-Z_0-9]+/
+        }
+      });
+
     </script>
   </body>
 </html>

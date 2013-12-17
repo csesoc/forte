@@ -75,7 +75,7 @@ def view_playlist(playlist_hash):
   playlist_id = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()[0][0]
   if request.method == "POST":
     g.db.execute('insert into songs (name, artist, youtube, votes, playlist) values (?, ?, ?, ?, ?)',
-                 [request.form['name'], request.form['artist'], request.form['youtube'], 0, playlist_id])
+                 [request.form['name'], request.form['artist'], request.form['youtube'][-11:], 0, playlist_id])
     g.db.commit()
     flash('New song was added')
     return redirect('/playlists/' + playlist_hash)

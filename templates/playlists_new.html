@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block title %} New playlist {% endblock %}
+{% block head %}
+    {{ super() }}
+
+{% endblock %}
+{% block content %}
+<h1> New playlist </h1>
+<form method="post" >
+  <label for="name">Name:</label>
+  <input type="text" name="name" placeholder="Playlist name..."/>
+  <br/>
+  <label for="description">Description:</label>
+  <input type="text" name="description" placeholder="Playlist description..."/>
+  <br/>
+  <label for="email">Emails:</label>
+  <input type="text" name="email" placeholder="Email address..."/>
+  <input type="submit" value="Create">
+</form>
+{% endblock %}

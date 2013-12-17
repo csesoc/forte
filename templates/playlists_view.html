@@ -1,0 +1,54 @@
+{% extends "layout.html" %} 
+{% block title %}
+  {{ playlist.name }}
+{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1> Playlist view </h1>
+  {{ playlist.name }}
+  <br/>
+  {{ playlist.description }}
+  <br/>
+
+  <h2> Add a new song</h2>
+  <form method="POST">
+    <label for="name">Name: </label>
+    <input type="text" name="name" placeholder="Song name..." />
+    <br/>
+    <label for="artist">Artist: </label>
+    <input type="text" name="artist" placeholder="Song artist..." />
+    <br/>
+    <label for="youtube">Youtube link: </label>
+    <input type="text" name="youtube" placeholder="Youtube link..." />
+    <input type="submit" value="Add!" />
+  </form>
+  {% if songs %}
+  <table>
+    <tbody>
+      <tr>
+        <th> Youtube link </th>
+        <th> Song </th>
+        <th> Votes </th>
+      </tr>
+      {% for song in songs %}
+      <tr>
+        <td><iframe width="560" height="315" src="{{ song.youtube }}" frameborder="0" allowfullscreen></iframe></td>
+        <td> {{ song.name }} by {{ song.artist }} </td>
+        <td> {{ song.votes }} 
+          <form method="POST", action="/playlists/{{ playlist.hash }}/{{ song.id }}/up">
+            <input type="submit" value="Upvote"/>
+          </form>
+          <form method="POST", action="/playlists/{{ playlist.hash }}/{{ song.id }}/down">
+            <input type="submit" value="Downvote"/>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <h1> No songs :( </h1>
+  {% endif %}
+{% endblock %}

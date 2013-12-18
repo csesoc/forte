@@ -69,7 +69,11 @@ def new_playlist():
 @app.route('/playlists/<playlist_hash>', methods=['GET', 'POST'])
 def view_playlist(playlist_hash):
   error = None
-  playlist_id = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()[0][0]
+  playlists = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()
+  print playlists
+  if len(playlists) == 0:
+    abort(404)
+  playlist_id = playlists[0][0]
   if request.method == "POST":
     g.db.execute('insert into songs (name, artist, youtube, votes, playlist) values (?, ?, ?, ?, ?)',
                  [request.form['name'], request.form['artist'], request.form['youtube'][-11:], 0, playlist_id])

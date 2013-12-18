@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/foundation-icons.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
     <script src="{{ url_for('static', filename='js/modernizr.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/prototype.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cookiejar.js') }}"></script>
     <script src="{{ url_for('static', filename='js/application.js') }}"></script>
     {% endblock %}
   </head>
-  <body>
+  <body onload="checkCookie()">
     <div class="wrapper">
       <div class="row">
         <div class="small-5 columns">

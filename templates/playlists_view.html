@@ -7,7 +7,11 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-
+<script type="text/javascript">
+  window.onload = function() {
+    applyVotes();
+  }
+</script>
 <div class="row">
   <div class="large-12 columns">
   <h2> {{ playlist.name }} </h2>
@@ -84,8 +88,8 @@
           <i>by</i> {{ song.artist }}
         </div>
         <div class="large-1 columns">
-          <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary" style="margin:0" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', {{ song.votes }})"><i class="fi-like"></i></button><br />
-          <button id="down_{{ song.id }}"type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', {{ song.votes }}  )"><i class='fi-dislike'></i></button>
+          <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary" style="margin:0" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', $('button#down_{{ song.id }} + p').text())"><i class="fi-like"></i></button><br />
+          <button id="down_{{ song.id }}"type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', $('button#down_{{ song.id }} + p').text())"><i class='fi-dislike'></i></button>
         <p id="votes_{{ song.id }}">
           {{ song.votes }}
         </p>     

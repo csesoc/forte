@@ -104,7 +104,8 @@ var checkCookie = function() {
   return;
 };
 
-var addToCookie = function(song_id, vote) { 
+var addToCookie = function(song_id, vote) {
+  checkCookie();
   var forte = jar.get('forte');
   if(vote == 0) {
     delete forte[song_id];

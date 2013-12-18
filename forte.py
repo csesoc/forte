@@ -85,29 +85,29 @@ def view_playlist(playlist_hash):
     songs = [dict(id=row[0], name=row[1], artist=row[2], youtube=row[3], votes=row[4]) for row in song_obj.fetchall()]
     return render_template('playlists_view.html', playlist=playlist, songs=songs)
 
-@app.route('/playlists/<playlist_hash>/<int:song_id>/up', methods=["POST"])
-def upvote_song(playlist_hash, song_id):
+@app.route('/playlists/<playlist_hash>/<int:song_id>/up/<int:votes>', methods=["POST"])
+def upvote_song(playlist_hash, song_id, votes):
   error = None
-  g.db.execute('update songs set votes=votes+1 where id=?', [song_id])
+  g.db.execute('update songs set votes=votes+? where id=?', [votes, song_id])
   g.db.commit()
-  return redirect('/playlists/' + playlist_hash)
+  return "OK 200"
 
-@app.route('/playlists/<playlist_hash>/<int:song_id>/down', methods=["POST"])
-def downvote_song(playlist_hash, song_id):
+@app.route('/playlists/<playlist_hash>/<int:song_id>/down/<int:votes>', methods=["POST"])
+def downvote_song(playlist_hash, song_id, votes):
   error = None
-  g.db.execute('update songs set votes=votes-1 where id=?', [song_id])
+  g.db.execute('update songs set votes=votes-? where id=?', [votes, song_id])
   g.db.commit()
-  return redirect('/playlists/' + playlist_hash)
+  return "OK 200"
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+  return render_template('404.html'), 404
 
 if __name__ == '__main__':
-    app.debug = True
-    if not app.debug:
-      file_handler = logging.FileHandler(filename="logs/production.log")
-      app.logger.setLevel(logging.WARNING)
-      app.logger.addHandler(file_handler)
-    app.run(host="0.0.0.0")
+  app.debug = True
+  if not app.debug:
+    file_handler = logging.FileHandler(filename="logs/production.log")
+    app.logger.setLevel(logging.WARNING)
+    app.logger.addHandler(file_handler)
+  app.run()
 

@@ -1,0 +1,13 @@
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1687, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1360, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1358, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1344, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "forte.py", line 39, in index
+    raise
+TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType

@@ -83,11 +83,11 @@ var sortSongs = function(){
     if (!isNaN(votes[i-1])) {
       if (votes[i-1] < votes[i]) {
         var toAppend = divList[i-1];
-        $j(toAppend).slideUp('slow').delay(600);
+        $j(toAppend).slideUp().delay(300);
         setTimeout(function() {
           $j(a).after(toAppend);
-        }, 600);
-        $j(toAppend).slideDown('slow');
+        }, 350);
+        $j(toAppend).slideDown();
       }
     }
   });

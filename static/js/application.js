@@ -3,17 +3,17 @@ var upvote = function(song_id, playlist_hash, song_votes) {
   up_id = "#up_" + song_id;
   down_id = "#down_" + song_id;
 
-  if ($(up_id).hasClass('voted') === false) {
+  if ($(up_id).hasClass('secondary') === true) {
     $.post("/playlists/" + playlist_hash + "/" + song_id + "/up");
-    $(up_id).addClass('voted');
+    $(up_id).removeClass('secondary');
     song_votes += 1;
   } else {
     $.post("/playlists/" + playlist_hash + "/" + song_id + "/down");
-    $(up_id).removeClass('voted');
+    $(up_id).addClass('secondary');
   }
-  if ($(down_id).hasClass('voted') === true) {
+  if ($(down_id).hasClass('secondary') === false) {
     $.post("/playlists/" + playlist_hash + "/" + song_id + "/up");
-    $(down_id).removeClass('voted');
+    $(down_id).addClass('secondary');
   }
 
   votes_id = "#votes_" + song_id;
@@ -24,17 +24,17 @@ var downvote = function(song_id, playlist_hash, song_votes) {
   up_id = "#up_" + song_id;
   down_id = "#down_" + song_id;
 
-  if ($(down_id).hasClass('voted') === false) {
+  if ($(down_id).hasClass('secondary') === true) {
     $.post("/playlists/" + playlist_hash + "/" + song_id + "/down");
-    $(down_id).addClass('voted');
+    $(down_id).removeClass('secondary');
     song_votes -= 1;
   } else {
     $.post("/playlists/" + playlist_hash + "/" + song_id + "/up");
-    $(down_id).removeClass('voted');
+    $(down_id).addClass('secondary');
   }
-  if ($(up_id).hasClass('voted') === true) {
+  if ($(up_id).hasClass('secondary') === false) {
     $.post("/playlists/" + playlist_hash + "/" + song_id + "/down");
-    $(up_id).removeClass('voted');
+    $(up_id).addClass('secondary');
   }
 
   votes_id = "#votes_" + song_id;

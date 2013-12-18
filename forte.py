@@ -101,13 +101,13 @@ def downvote_song(playlist_hash, song_id, votes):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+  return render_template('404.html'), 404
 
 if __name__ == '__main__':
-    app.debug = True
-    if not app.debug:
-      file_handler = logging.FileHandler(filename="logs/production.log")
-      app.logger.setLevel(logging.WARNING)
-      app.logger.addHandler(file_handler)
-    app.run(host="0.0.0.0")
+  app.debug = True
+  if not app.debug:
+    file_handler = logging.FileHandler(filename="logs/production.log")
+    app.logger.setLevel(logging.WARNING)
+    app.logger.addHandler(file_handler)
+  app.run()
 

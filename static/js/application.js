@@ -45,7 +45,7 @@ var downvote = function(song_id, playlist_hash, song_votes) {
     song_votes -= 1;
     vote = -1;
   } else {
-    $.post("/playlists/" + playlist_hash + "/" + song_id + "/up");
+    $(down_id).addClass('secondary');
     song_votes += 1;
     vote = 0;
   }

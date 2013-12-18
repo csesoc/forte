@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %} Index page {% endblock %}
+{% block head %}
+    {{ super() }}
+
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="large-12 columns text-center">
+        <h2 style="margin-bottom:2rem">404 Page Not Found</h2>
+        <div class="panel">
+            <p>This playlist doesn't exist yet. Check that you typed the url correctly.</p>
+            <p>Want to use this URL for your new playlist? <a href="#">Click here!</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

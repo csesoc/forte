@@ -66,11 +66,31 @@ var downvote = function(song_id, playlist_hash, song_votes) {
 };
 
 var sortSongs = function(){
-  sorted = $j('#sortable > div').sort(function(a, b) {
-    return parseInt($j("p", a).text()) < parseInt($j("p", b).text())
+  divList = $j('#sortable > div').each(function(a, b) { 
+    return parseInt($j("p", a).text())
   });
-  $j('#sortable').html('');
-  sorted.each(function(i, a) {$j('#sortable').append(a)});
+
+  function getVotes(a) {
+    return parseInt($j("p", a).text());
+  }
+
+  var votes = new Array();
+  divList.each(function(i, a) {
+    votes[i] = getVotes(a);
+  });
+
+  divList.each(function(i, a) {
+    if (!isNaN(votes[i-1])) {
+      if (votes[i-1] < votes[i]) {
+        var toAppend = divList[i-1];
+        $j(toAppend).slideUp('slow').delay(600);
+        setTimeout(function() {
+          $j(a).after(toAppend);
+        }, 600);
+        $j(toAppend).slideDown('slow');
+      }
+    }
+  });
 };
 
 var checkCookie = function() {

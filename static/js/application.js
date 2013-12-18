@@ -67,7 +67,7 @@ var downvote = function(song_id, playlist_hash, song_votes) {
 
 var sortSongs = function(){
   sorted = $('#sortable > div').sort(function(a, b) {
-    return $("p", a).text() < $("p", b).text()
+    return parseInt($("p", a).text()) < parseInt($("p", b).text())
   });
   $('#sortable').html('');
   sorted.each(function(i, a) {$('#sortable').append(a)});

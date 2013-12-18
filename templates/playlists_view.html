@@ -76,12 +76,15 @@
           <div class="large-2 columns text-center">
             {% if song.youtube %}
             <div class="flex-video">
-              <object width= "560" height="315"><param name="movie" value="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0"></param><param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param><embed src="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed></object>
+              <object width= "560" height="315">
+                  <param name="movie" value="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0"></param>
+                  <param name="allowFullScreen" value="false"></param>
+                  <param name="allowscriptaccess" value="always"></param>
+                  <embed src="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed>
+              </object>
             </div>
             {% else %}
-
             <i class="fi-play-video" style="font-size:7rem"></i>
-
             {% endif %}      
           </div>
           <div class="large-9 columns">

@@ -58,7 +58,6 @@ def new_playlist():
                     recipients=emails)
       # Check for hostname rather than doing this
       # Add a nicer message
-      print app.config
       msg.body = "http://" + app.config['SERVER_NAME'] + "/" + playlist_hash
       mail.send(msg)
 
@@ -70,7 +69,6 @@ def new_playlist():
 def view_playlist(playlist_hash):
   error = None
   playlists = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()
-  print playlists
   if len(playlists) == 0:
     abort(404)
   playlist_id = playlists[0][0]

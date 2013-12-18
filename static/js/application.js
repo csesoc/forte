@@ -18,6 +18,7 @@ var upvote = function(song_id, playlist_hash, song_votes) {
 
   votes_id = "#votes_" + song_id;
   $(votes_id).text(song_votes);
+  sortSongs();
 };
 
 var downvote = function(song_id, playlist_hash, song_votes) {
@@ -39,4 +40,13 @@ var downvote = function(song_id, playlist_hash, song_votes) {
 
   votes_id = "#votes_" + song_id;
   $(votes_id).text(song_votes);
+  sortSongs();
 };
+
+var sortSongs = function(){
+  sorted = $('#sortable > div').sort(function(a, b) {
+    return $("p", a).text() < $("p", b).text()
+  });
+  $('#sortable').html('');
+  sorted.each(function(i, a) {$('#sortable').append(a)});
+}

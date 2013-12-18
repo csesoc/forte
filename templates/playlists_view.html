@@ -65,34 +65,36 @@
   
     <h3>Songs:</h3>
 {% if songs %}
-    {% for song in songs %}
-    <div class="panel">
-      <div class="row">
-        <div class="large-2 columns text-center">
-          {% if song.youtube %}
-          <div class="flex-video">
-            <object width= "560" height="315"><param name="movie" value="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0"></param><param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param><embed src="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed></object>
+    <div id="sortable">
+      {% for song in songs %}
+      <div class="panel">
+        <div class="row">
+          <div class="large-2 columns text-center">
+            {% if song.youtube %}
+            <div class="flex-video">
+              <object width= "560" height="315"><param name="movie" value="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0"></param><param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param><embed src="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed></object>
+            </div>
+            {% else %}
+
+            <i class="fi-play-video" style="font-size:7rem"></i>
+
+            {% endif %}      
           </div>
-          {% else %}
-
-          <i class="fi-play-video" style="font-size:7rem"></i>
-
-          {% endif %}      
-        </div>
-        <div class="large-9 columns">
-          <h4>{{ song.name }}</h4>
-          <i>by</i> {{ song.artist }}
-        </div>
-        <div class="large-1 columns">
-          <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary" style="margin:0" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', {{ song.votes }})"><i class="fi-like"></i></button><br />
-          <button id="down_{{ song.id }}"type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', {{ song.votes }}  )"><i class='fi-dislike'></i></button>
-        <p id="votes_{{ song.id }}">
-          {{ song.votes }}
-        </p>     
-        </div>
-      </div>       
+          <div class="large-9 columns">
+            <h4>{{ song.name }}</h4>
+            <i>by</i> {{ song.artist }}
+          </div>
+          <div class="large-1 columns">
+            <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary" style="margin:0" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', {{ song.votes }})"><i class="fi-like"></i></button><br />
+            <button id="down_{{ song.id }}"type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', {{ song.votes }}  )"><i class='fi-dislike'></i></button>
+          <p id="votes_{{ song.id }}">
+            {{ song.votes }}
+          </p>     
+          </div>
+        </div>       
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
 </div>
   {% else %}

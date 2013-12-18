@@ -9,27 +9,27 @@ var upvote = function(song_id, playlist_hash, song_votes) {
   down_id = "#down_" + song_id;
   song_votes = parseInt(song_votes);
   original_votes = song_votes;
-  if ($(up_id).hasClass('secondary') === true) {
-    $(up_id).removeClass('secondary');
+  if ($j(up_id).hasClass('secondary') === true) {
+    $j(up_id).removeClass('secondary');
     song_votes += 1;
     vote = 1;
   } else {
-    $(up_id).addClass('secondary');
+    $j(up_id).addClass('secondary');
     song_votes -= 1;
     vote = 0;
   }
-  if ($(down_id).hasClass('secondary') === false) {
-    $(down_id).addClass('secondary');
+  if ($j(down_id).hasClass('secondary') === false) {
+    $j(down_id).addClass('secondary');
     song_votes += 1;
   }
   change_of_votes = song_votes - original_votes;
   if (change_of_votes > 0) {
-    $.post("/playlists/" + playlist_hash + "/" + song_id + "/up/" + change_of_votes);
+    $j.post("/playlists/" + playlist_hash + "/" + song_id + "/up/" + change_of_votes);
   } else {
-    $.post("/playlists/" + playlist_hash + "/" + song_id + "/down/" + Math.abs(change_of_votes));
+    $j.post("/playlists/" + playlist_hash + "/" + song_id + "/down/" + Math.abs(change_of_votes));
   }
   votes_id = "#votes_" + song_id;
-  $(votes_id).text(song_votes);
+  $j(votes_id).text(song_votes);
   sortSongs();
   addToCookie(song_id, vote);
 };
@@ -40,37 +40,37 @@ var downvote = function(song_id, playlist_hash, song_votes) {
   down_id = "#down_" + song_id;
   song_votes = parseInt(song_votes);
   original_votes = song_votes;
-  if ($(down_id).hasClass('secondary') === true) {
-    $(down_id).removeClass('secondary');
+  if ($j(down_id).hasClass('secondary') === true) {
+    $j(down_id).removeClass('secondary');
     song_votes -= 1;
     vote = -1;
   } else {
-    $(down_id).addClass('secondary');
+    $j(down_id).addClass('secondary');
     song_votes += 1;
     vote = 0;
   }
-  if ($(up_id).hasClass('secondary') === false) {
-    $(up_id).addClass('secondary');
+  if ($j(up_id).hasClass('secondary') === false) {
+    $j(up_id).addClass('secondary');
     song_votes -= 1;
   }
   change_of_votes = song_votes - original_votes;
   if (change_of_votes > 0) {
-    $.post("/playlists/" + playlist_hash + "/" + song_id + "/up/" + change_of_votes);
+    $j.post("/playlists/" + playlist_hash + "/" + song_id + "/up/" + change_of_votes);
   } else {
-    $.post("/playlists/" + playlist_hash + "/" + song_id + "/down/" + Math.abs(change_of_votes));
+    $j.post("/playlists/" + playlist_hash + "/" + song_id + "/down/" + Math.abs(change_of_votes));
   }
   votes_id = "#votes_" + song_id;
-  $(votes_id).text(song_votes);
+  $j(votes_id).text(song_votes);
   sortSongs();
   addToCookie(song_id, vote);
 };
 
 var sortSongs = function(){
-  sorted = $('#sortable > div').sort(function(a, b) {
-    return parseInt($("p", a).text()) < parseInt($("p", b).text())
+  sorted = $j('#sortable > div').sort(function(a, b) {
+    return parseInt($j("p", a).text()) < parseInt($j("p", b).text())
   });
-  $('#sortable').html('');
-  sorted.each(function(i, a) {$('#sortable').append(a)});
+  $j('#sortable').html('');
+  sorted.each(function(i, a) {$j('#sortable').append(a)});
 };
 
 var checkCookie = function() {
@@ -99,10 +99,10 @@ var applyVotes = function() {
   for (song in forte) {
     if (forte[song] == 1) {
       up_id = "#up_" + song;
-      $(up_id).removeClass("secondary");
+      $j(up_id).removeClass("secondary");
     } else {
       down_id = "#down_" + song;  
-      $(down_id).removeClass("secondary");
+      $j(down_id).removeClass("secondary");
     }
   }
 };

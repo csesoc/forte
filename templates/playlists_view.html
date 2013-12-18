@@ -92,8 +92,8 @@
             <i>by</i> {{ song.artist }}
           </div>
           <div class="large-1 columns">
-            <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary" style="margin:0" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', $('button#down_{{ song.id }} + p').text())"><i class="fi-like"></i></button><br />
-            <button id="down_{{ song.id }}"type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', $('button#down_{{ song.id }} + p').text())"><i class='fi-dislike'></i></button>
+            <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary" style="margin:0" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', $j('button#down_{{ song.id }} + p').text())"><i class="fi-like"></i></button><br />
+            <button id="down_{{ song.id }}"type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', $j('button#down_{{ song.id }} + p').text())"><i class='fi-dislike'></i></button>
           <p id="votes_{{ song.id }}">
             {{ song.votes }}
           </p>     

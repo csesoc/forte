@@ -21,7 +21,8 @@ Run the following
 ```
 $ git clone git@github.com:csesoc/forte.git
 $ cd forte
-$ export FORTE_CONFIG=development_config.py
+$ echo "export FORTE_CONFIG=development_config.py" >> ~/.bashrc
+$ bash
 $ pip install -r requirements.txt
 $ python
 > from forte import init_db

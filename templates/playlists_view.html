@@ -13,14 +13,34 @@
   }
 </script>
 <div class="row">
-  <div class="large-12 columns">
-  <h2> {{ playlist.name }} </h2>
+  <div class="small-12 columns">
+    <h2>{{ playlist.name }}</h2>
+  </div>
+</div>
+<div class="row">
   {% if playlist.description %}
-  <div class="panel">
-  <p>{{ playlist.description }}</p>
+  <div class="small-6 columns">
+    <h4>Description:</h4>
+    <div class="panel">
+    <p>{{ playlist.description }}</p>
+    </div>
+    
+  </div>
+  <div class="small-6 columns">
+    <h4>Link:</h4>
+    <div class="panel">
+    <p><a href="http://jwiseheart.com:5000/playlists/{{ playlist.hash }}">http://jwiseheart.com:5000/playlists/{{ playlist.hash }}</a></p>
+    </div>
+  </div>
+  {% else %}
+  <div class="small-12 columns">
+    <h4>Link:</h4>
+    <div class="panel text-center">
+    <p><a href="http://jwiseheart.com:5000/playlists/{{ playlist.hash }}">http://jwiseheart.com:5000/playlists/{{ playlist.hash }}</a></p>
+    </div>
   </div>
   {% endif %}
-</div></div>
+</div>
 
 <div class="row" style="margin-top:20px">
   <div class="large-12 columns">
@@ -46,12 +66,12 @@
             <div class="row">
               <div class="large-10 columns">
               <div class="input-wrapper">
-                <input type="text" name="youtube" placeholder="Youtube link..." style="margin-bottom:0" required pattern="youtube">
+                <input type="text" name="youtube" placeholder="Youtube link..." class="no-margin-bottom" required pattern="youtube">
                 <small class="error">You must include a youtube link in the format http://www.youtube.com/watch?v=VIDEOID</small>
                 </div>
               </div>
               <div class="large-2 columns">
-                <input type="submit" class="button postfix" style="margin:0" value="Add">
+                <input type="submit" class="button postfix" class="no-margin" value="Add">
               </div>
             </div>
           </div>
@@ -66,49 +86,33 @@
 
 <div class="row">
   <div class="large-12 medium-12 columns">
-  
-    <h3>Songs:</h3>
-{% if songs %}
-    <div id="sortable">
+    <h4>Songs:</h4>
+    {% if songs %}
+    <ul id="Grid" style="margin-left:0">
       {% for song in songs %}
-      <div class="panel">
+      <li class="panel nb mix" style="width: 100%;">
         <div class="row">
-          <div class="large-2 columns text-center">
-            {% if song.youtube %}
-            <div class="flex-video">
-              <object width= "560" height="315">
-                  <param name="movie" value="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0"></param>
-                  <param name="allowFullScreen" value="false"></param>
-                  <param name="allowscriptaccess" value="always"></param>
-                  <embed src="http://youtube.com/v/{{ song.youtube }}&rel=0&fs=0&theme=light&showinfo=0" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed>
-              </object>
-            </div>
-            {% else %}
-            <i class="fi-play-video" style="font-size:7rem"></i>
-            {% endif %}      
+          <div class="small-1 columns text-center buttonBox">
+            <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary upvote" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', parseInt($j('#votes_{{ song.id }}').text()))"><i class="fi-like"></i></button>
+            <h5 id="votes_{{ song.id }}" class="no-margin-bottom">{{ song.votes }}</h5> 
+            <button id="down_{{ song.id }}" type="submit" class="insanelysmall button secondary downvote" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', parseInt($j('#votes_{{ song.id }}').text()))"><i class='fi-dislike'></i></button>
           </div>
-          <div class="large-9 columns">
+          <div class="small-10 columns">
             <h4>{{ song.name }}</h4>
             <i>by</i> {{ song.artist }}
           </div>
-          <div class="large-1 columns">
-            <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary" style="margin:0" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', $j('button#down_{{ song.id }} + p').text())"><i class="fi-like"></i></button><br />
-            <button id="down_{{ song.id }}"type="submit" class="insanelysmall button secondary" style="margin-top:5px;margin-bottom:0;" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', $j('button#down_{{ song.id }} + p').text())"><i class='fi-dislike'></i></button>
-          <p id="votes_{{ song.id }}">
-            {{ song.votes }}
-          </p>     
+          <div class="small-1 columns text-center">
+          {% if song.youtube %}<a href="http://youtube.com/v/{{ song.youtube }}"><i class="fi-social-youtube youtube"></i></a>{% endif %} 
           </div>
         </div>       
-      </div>
+      </li>
       {% endfor %}
+    </ul>
+    {% else %}
+    <div class="panel">
+      <h5>Be the first to add a song.</h5>
     </div>
+    {% endif %}
   </div>
 </div>
-  {% else %}
-  <div class="panel">
-  <h5>Be the first to add a song.</h5>
-  </div>
-  {% endif %}
-  </div>
-  </div>
 {% endblock %}

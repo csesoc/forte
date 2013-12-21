@@ -48,7 +48,7 @@
       <div class="row">
         <hr>
         <div class="large-12 columns text-center">
-          <small>Forte by CSESoc Dev Team for ARC Yellow Shirts. &copy; 2013 CSESoc</small>
+          <small>Forte by CSESoc Dev Team for Arc Yellow Shirts. &copy; 2013 CSESoc</small>
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@
       $j(document).foundation();
       $j(document).foundation('abide', {
         patterns: {
-          youtube: /http:\/\/www.youtube.com\/watch\?v=[A-Z_0-9]+/
+          youtube: /^http:\/\/(?:www\.)?youtube.com\/watch\?(?=[^?]*v=\w+)(?:[^\s?]+)?$/
         }
       });
 

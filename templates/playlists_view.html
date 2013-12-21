@@ -96,10 +96,21 @@
             <i>by</i> {{ song.artist }}
           </div>
           <div class="small-1 columns text-center">
-          {% if song.youtube %}<a href="http://youtube.com/v/{{ song.youtube }}"><i class="fi-social-youtube youtube"></i></a>{% endif %} 
+          {% if song.youtube %}<a data-reveal-id="videoModal_{{ song.id }}"><i class="fi-social-youtube youtube"></i></a>{% endif %} 
           </div>
         </div>       
       </li>
+      <div id="videoModal_{{ song.id }}" class="reveal-modal small" data-reveal>
+        <div class="flex-video">
+          <object width= "560" height="315">
+            <param name="movie" value="http://youtube.com/v/{{ song.youtube }}&autoplay=1&rel=0&fs=0&theme=light&hd=1"></param>
+            <param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param>
+            <embed src="http://youtube.com/v/{{ song.youtube }}&autoplay=1&rel=0&fs=0&theme=light&hd=1" type="application/x-shockwave-flash" allowfullscreen="false" width="560" height="315" allowscriptaccess="always"></embed>
+          </object>
+        </div>
+        <a class="close-reveal-modal">&#215;</a>
+      </div>
+  
       {% endfor %}
     </ul>
     {% else %}
@@ -109,4 +120,6 @@
     {% endif %}
   </div>
 </div>
+
+
 {% endblock %}

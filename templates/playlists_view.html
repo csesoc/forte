@@ -1,8 +1,6 @@
 {% extends "layout.html" %} 
 
-{% block title %}
-  {{ playlist.name }}
-{% endblock %}
+{% block title %}Forte - {{ playlist.name }}{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -22,27 +20,26 @@
   <div class="medium-6 columns">
     <h4>Description:</h4>
     <div class="panel">
-    <p>{{ playlist.description }}</p>
+      <p>{{ playlist.description }}</p>
     </div>
-    
   </div>
   <div class="large-6 columns">
     <h4>Link:</h4>
     <div class="panel">
-    <p><a href="http://jwiseheart.com:5000/playlists/{{ playlist.hash }}">http://jwiseheart.com:5000/playlists/{{ playlist.hash }}</a></p>
+      <p><a href="http://jwiseheart.com:5000/playlists/{{ playlist.hash }}">http://jwiseheart.com:5000/playlists/{{ playlist.hash }}</a></p>
     </div>
   </div>
   {% else %}
   <div class="small-12 columns">
     <h4>Link:</h4>
     <div class="panel text-center">
-    <p><a href="http://jwiseheart.com:5000/playlists/{{ playlist.hash }}">http://jwiseheart.com:5000/playlists/{{ playlist.hash }}</a></p>
+      <p><a href="http://jwiseheart.com:5000/playlists/{{ playlist.hash }}">http://jwiseheart.com:5000/playlists/{{ playlist.hash }}</a></p>
     </div>
   </div>
   {% endif %}
 </div>
 
-<div class="row" style="margin-top:20px">
+<div class="row">
   <div class="large-12 columns">
     <h4>Suggest Songs:</h4>
     <form method="POST" data-abide>
@@ -57,17 +54,17 @@
                 </div>
               </div>
               <div class="large-6 columns">
-              <div class="input-wrapper">
-                <input type="text" name="artist" placeholder="Song artist..." required/>
-                <small class="error">You must include an artist.</small>
+                <div class="input-wrapper">
+                  <input type="text" name="artist" placeholder="Song artist..." required/>
+                  <small class="error">You must include an artist.</small>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="large-10 columns">
-              <div class="input-wrapper">
-                <input type="text" name="youtube" placeholder="Youtube link..." required pattern="youtube">
-                <small class="error">You must include a youtube link in the format http://www.youtube.com/watch?v=VIDEOID</small>
+                <div class="input-wrapper">
+                  <input type="text" name="youtube" placeholder="Youtube link..." required pattern="youtube">
+                  <small class="error">You must include a youtube link in the format http://www.youtube.com/watch?v=VIDEOID</small>
                 </div>
               </div>
               <div class="large-2 columns">
@@ -81,16 +78,13 @@
   </div>
 </div>
 
-
-
-
 <div class="row">
   <div class="large-12 medium-12 columns">
     <h4>Songs:</h4>
     {% if songs %}
     <ul id="Grid" style="margin-left:0">
       {% for song in songs %}
-      <li class="panel nb mix" style="width: 100%;">
+      <li class="panel nb mix">
         <div class="row">
           <div class="small-1 columns text-center buttonBox">
             <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary upvote" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', parseInt($j('#votes_{{ song.id }}').text()))"><i class="fi-like"></i></button>

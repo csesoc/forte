@@ -6,20 +6,19 @@
 {% endblock %}
 {% block content %}
 
-    
     <div class="row">
       <form method="post" data-abide>
         <div class="large-6 large-centered columns text-center">
           <h3>New Playlist</h3>
           <div class="input-wrapper">
-          <input type="text" name="name" placeholder="Playlist name..." required pattern="[a-zA-Z ']+"/>
-          <small class="error">A valid playlist name is required.</small>
+            <input type="text" name="name" placeholder="Playlist name..." required pattern="[a-zA-Z ']+"/>
+            <small class="error">A valid playlist name is required.</small>
           </div>
-          <textarea type="text" name="description" placeholder="Playlist description..." style="height:100px"></textarea>
+          <textarea type="text" name="description" placeholder="Playlist description..." class="description"></textarea>
           <input type="text" name="email" placeholder="Email address..."/>
           <input type="submit" class="button" value="Create">
         </div>
-    </form>
+      </form>
     </div>
 
 {% endblock %}

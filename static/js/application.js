@@ -7,7 +7,7 @@ var upvote = function(song_id, playlist_hash, song_votes) {
   vote = 0;
   up_id = "#up_" + song_id;
   down_id = "#down_" + song_id;
-  song_votes = parseInt(song_votes);
+  song_votes = parseInt(song_votes, 10);
   original_votes = song_votes;
   if ($j(up_id).hasClass('secondary') === true) {
     $j(up_id).removeClass('secondary');
@@ -37,8 +37,7 @@ var downvote = function(song_id, playlist_hash, song_votes) {
   vote = 0;
   up_id = "#up_" + song_id;
   down_id = "#down_" + song_id;
-  song_votes = parseInt(song_votes);
-  console.log
+  song_votes = parseInt(song_votes, 10);
   original_votes = song_votes;
   if ($j(down_id).hasClass('secondary') === true) {
     $j(down_id).removeClass('secondary');
@@ -67,34 +66,30 @@ var downvote = function(song_id, playlist_hash, song_votes) {
 
 
 var sortSongs = function(){
- // $j('#Grid>li').tsort('div>div>p',{order:'desc'});
-
   var $Ul = $j('#Grid');
-$Ul.css({position:'relative',height:$Ul.height(),display:'block'});
-var iLnH;
-var $Li = $j('ul>li');
-$Li.each(function(i,el){
-  var iY = $j(el).position().top;
-  $j.data(el,'h',iY);
-  if (i===1) iLnH = iY;
-});
-$Li.tsort('div>div>h5',{order:'desc'}).each(function(i,el){
-  var $El = $j(el);
-  var iFr = $j.data(el,'h');
-  var iTo = i*iLnH;
-  $El.css({position:'absolute',top:iFr}).animate({top:iTo},500);
-});
-
- //$j('#Grid').mixitup('sort',['votes','asc']);
+  $Ul.css({position:'relative',height:$Ul.height(),display:'block'});
+  var iLnH;
+  var $Li = $j('ul>li');
+  $Li.each(function(i,el){
+    var iY = $j(el).position().top;
+    $j.data(el,'h',iY);
+    if (i===1) iLnH = iY;
+  });
+  $Li.tsort('div>div>h5',{order:'desc'}).each(function(i,el){
+    var $El = $j(el);
+    var iFr = $j.data(el,'h');
+    var iTo = i*iLnH;
+    $El.css({position:'absolute',top:iFr}).animate({top:iTo},500);
+  });
 };
 
 var checkCookie = function() {
   var forte = jar.get('forte');
-  if (forte != null) {
+  if (forte !== null) {
    // console.log(forte);
   } else {
     forte = {};
-    jar.put('forte', forte);  
+    jar.put('forte', forte);
   }
   return;
 };
@@ -102,7 +97,7 @@ var checkCookie = function() {
 var addToCookie = function(song_id, vote) {
   checkCookie();
   var forte = jar.get('forte');
-  if(vote == 0) {
+  if(vote === 0) {
     delete forte[song_id];
   } else {
     forte[song_id] = vote;
@@ -112,12 +107,12 @@ var addToCookie = function(song_id, vote) {
 
 var applyVotes = function() {
   var forte = jar.get('forte');
-  for (song in forte) {
+  for (var song in forte) {
     if (forte[song] == 1) {
       up_id = "#up_" + song;
       $j(up_id).removeClass("secondary");
     } else {
-      down_id = "#down_" + song;  
+      down_id = "#down_" + song; 
       $j(down_id).removeClass("secondary");
     }
   }

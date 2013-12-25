@@ -1,6 +1,6 @@
 {% extends "layout.html" %} 
 
-{% block title %}Forte - {{ playlist.name }}{% endblock %}
+{% block title %}{{ playlist.name }}{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -85,15 +85,19 @@
     <ul id="Grid" style="margin-left:0">
       {% for song in songs %}
       <li class="panel nb mix" id="song_{{ song.id }}">
-        <div class="row">
+        <div class="row" style="position: relative;">
+          <div class="editbuttons">
+            <a onClick="editSong('{{ song.id }}', '{{ song.name }}', '{{song.artist }}', '{{ song.youtube }}', '{{ playlist.hash }}')" class="hide"><i class="fi-pencil" style="color:#6e6e6e"></i></a>
+            <a href="/playlists/{{ playlist.hash }}/{{ song.id }}/delete"><i class="fi-x" style="color:#6e6e6e"></i></a>
+          </div>
           <div class="small-1 columns text-center buttonBox">
             <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary upvote" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', parseInt($j('#votes_{{ song.id }}').text()))"><i class="fi-like"></i></button>
             <h5 id="votes_{{ song.id }}" class="no-margin-bottom">{{ song.votes }}</h5> 
             <button id="down_{{ song.id }}" type="submit" class="insanelysmall button secondary downvote" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', parseInt($j('#votes_{{ song.id }}').text()))"><i class='fi-dislike'></i></button>
           </div>
           <div class="small-10 columns">
-            <h4><img src="/static/img/edit.png"/ onClick="editSong('{{ song.id }}', '{{ song.name }}', '{{song.artist }}', '{{ song.youtube }}', '{{ playlist.hash }}')"/> {{ song.name }}</h4> 
-            <img src="/static/img/delete.png" onClick="deleteSong({{ song.id }}, '{{ song.name }}', '{{ song.artist }}', '{{ playlist.hash }}')"/><i>by</i> {{ song.artist }}
+            <h4> {{ song.name }}</h4> 
+            <i>by</i> {{ song.artist }}
           </div>
           <div id="youtube_{{ song.id }}" class="small-1 columns text-center">
           {% if song.youtube %}<a data-reveal-id="videoModal_{{ song.id }}"><i class="fi-social-youtube youtube"></i></a>{% endif %} 

@@ -101,7 +101,7 @@ def edit_song(playlist_hash, song_id):
   g.db.commit()
   return "OK 200"
 
-@app.route('/playlists/<playlist_hash>/<int:song_id>/delete', methods=["POST"])
+@app.route('/playlists/<playlist_hash>/<int:song_id>/delete', methods=['GET', 'POST'])
 def delete_song(playlist_hash, song_id):
   error = None
   playlists = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()
@@ -110,8 +110,7 @@ def delete_song(playlist_hash, song_id):
   playlist_id = playlists[0][0]
   g.db.execute('delete from songs where id=?', [song_id])
   g.db.commit()
-  return "OK 200"
-
+  return redirect('/playlists/' + playlist_hash)
 
 @app.route('/playlists/<playlist_hash>/<int:song_id>/up/<int:votes>', methods=["POST"])
 def upvote_song(playlist_hash, song_id, votes):

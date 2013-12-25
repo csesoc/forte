@@ -30,13 +30,11 @@ def before_request():
   """Make sure we are connected to the database each request."""
   g.db = connect_db()
 
-
 @app.teardown_request
 def teardown_request(exception):
   """Closes the database again at the end of the request."""
   if hasattr(g, 'db'):
     g.db.close()
-
 
 @app.route('/')
 def index():
@@ -44,7 +42,6 @@ def index():
 
 @app.route('/playlists/new', methods=['GET', 'POST'])
 def new_playlist():
-  error = None
   if request.method ==  'POST':
     unique = 0
     while unique == 0:
@@ -71,7 +68,6 @@ def new_playlist():
 
 @app.route('/playlists/<playlist_hash>', methods=['GET', 'POST'])
 def view_playlist(playlist_hash):
-  error = None
   playlists = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()
   if len(playlists) == 0:
     abort(404)
@@ -91,7 +87,6 @@ def view_playlist(playlist_hash):
 
 @app.route('/playlists/<playlist_hash>/<int:song_id>/delete', methods=['GET', 'POST'])
 def delete_song(playlist_hash, song_id):
-  error = None
   playlists = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()
   if len(playlists) == 0:
     abort(404)
@@ -102,18 +97,15 @@ def delete_song(playlist_hash, song_id):
 
 @app.route('/playlists/<playlist_hash>/<int:song_id>/up/<int:votes>', methods=["POST"])
 def upvote_song(playlist_hash, song_id, votes):
-  error = None
   g.db.execute('update songs set votes=votes+? where id=?', [votes, song_id])
   g.db.commit()
   return "OK 200"
 
 @app.route('/playlists/<playlist_hash>/<int:song_id>/down/<int:votes>', methods=["POST"])
 def downvote_song(playlist_hash, song_id, votes):
-  error = None
   g.db.execute('update songs set votes=votes-? where id=?', [votes, song_id])
   g.db.commit()
   return "OK 200"
-
 
 @app.errorhandler(404)
 def page_not_found(e):

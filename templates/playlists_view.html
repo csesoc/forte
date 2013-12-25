@@ -26,14 +26,14 @@
   <div class="large-6 columns">
     <h4>Link:</h4>
     <div class="panel">
-      <p><a href="http://jwiseheart.com:5000/playlists/{{ playlist.hash }}">http://jwiseheart.com:5000/playlists/{{ playlist.hash }}</a></p>
+      <p><a href="http://{{ server }}/playlists/{{ playlist.hash }}">http://{{ server }}/playlists/{{ playlist.hash }}</a></p>
     </div>
   </div>
   {% else %}
   <div class="small-12 columns">
     <h4>Link:</h4>
     <div class="panel text-center">
-      <p><a href="http://jwiseheart.com:5000/playlists/{{ playlist.hash }}">http://jwiseheart.com:5000/playlists/{{ playlist.hash }}</a></p>
+      <p><a href="http://{{ server }}/playlists/{{ playlist.hash }}">http://{{ server }}/playlists/{{ playlist.hash }}</a></p>
     </div>
   </div>
   {% endif %}
@@ -84,7 +84,7 @@
     {% if songs %}
     <ul id="Grid" style="margin-left:0">
       {% for song in songs %}
-      <li class="panel nb mix">
+      <li class="panel nb mix" id="song_{{ song.id }}">
         <div class="row">
           <div class="small-1 columns text-center buttonBox">
             <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary upvote" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', parseInt($j('#votes_{{ song.id }}').text()))"><i class="fi-like"></i></button>
@@ -92,10 +92,10 @@
             <button id="down_{{ song.id }}" type="submit" class="insanelysmall button secondary downvote" onclick="downvote({{ song.id }}, '{{ playlist.hash }}', parseInt($j('#votes_{{ song.id }}').text()))"><i class='fi-dislike'></i></button>
           </div>
           <div class="small-10 columns">
-            <h4>{{ song.name }}</h4>
-            <i>by</i> {{ song.artist }}
+            <h4><img src="/static/img/edit.png"/ onClick="editSong('{{ song.id }}', '{{ song.name }}', '{{song.artist }}', '{{ song.youtube }}', '{{ playlist.hash }}')"/> {{ song.name }}</h4> 
+            <img src="/static/img/delete.png" onClick="deleteSong({{ song.id }}, '{{ song.name }}', '{{ song.artist }}', '{{ playlist.hash }}')"/><i>by</i> {{ song.artist }}
           </div>
-          <div class="small-1 columns text-center">
+          <div id="youtube_{{ song.id }}" class="small-1 columns text-center">
           {% if song.youtube %}<a data-reveal-id="videoModal_{{ song.id }}"><i class="fi-social-youtube youtube"></i></a>{% endif %} 
           </div>
         </div>       
@@ -120,6 +120,4 @@
     {% endif %}
   </div>
 </div>
-
-
 {% endblock %}

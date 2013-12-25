@@ -63,8 +63,6 @@ var downvote = function(song_id, playlist_hash, song_votes) {
   addToCookie(song_id, vote);
 };
 
-
-
 var sortSongs = function(){
   var $Ul = $j('#Grid');
   $Ul.css({position:'relative',height:$Ul.height(),display:'block'});
@@ -81,6 +79,88 @@ var sortSongs = function(){
     var iTo = i*iLnH;
     $El.css({position:'absolute',top:iFr}).animate({top:iTo},500);
   });
+};
+
+var editSong = function(song_id, song_name, song_artist, song_youtube, playlist_hash) {
+  var form_selector = "#song_" + song_id + " div.small-10.columns";
+  $j(form_selector).replaceWith('<form id=edit_' + song_id + ' method="POST" action="/playlists/' + playlist_hash + '/' + song_id + '/edit"> \
+      <div>\
+        <div class="row">\
+          <div class="large-10 columns"> \
+            <div class="row"> \
+              <div class="large-6 columns"> \
+              <div class="input-wrapper"> \
+                <input id="name_' + song_id + '" type="text" name="name" placeholder="Song name..." required/> \
+                <small class="error">You must include a name.</small> \
+                </div> \
+              </div> \
+              <div class="large-6 columns"> \
+                <div class="input-wrapper"> \
+                  <input id="artist_' + song_id + '" type="text" name="artist" placeholder="Song artist..." required/> \
+                  <small class="error">You must include an artist.</small> \
+                </div> \
+              </div> \
+            </div> \
+            <div class="row"> \
+              <div class="large-8 columns"> \
+                <div class="input-wrapper"> \
+                  <input id="link_' + song_id + '" type="text" name="youtube" placeholder="Youtube link..." required pattern="youtube"> \
+                  <small class="error">You must include a youtube link in the format http://www.youtube.com/watch?v=VIDEOID</small> \
+                </div> \
+              </div> \
+              <div class="large-2 columns"> \
+                <input type="submit" class="button postfix" class="no-margin" value="Edit"> \
+              </div> \
+              <div class="large-2 columns"> \
+                <input type="button" class="button postfix secondary" class="no-margin" value="Cancel" onClick="cancelEdit(' + song_id + ',\'' + song_name + '\',\'' + song_artist + '\',\'' + song_youtube + '\',\'' + playlist_hash +'\')"> \
+              </div> \
+            </div> \
+          </div> \
+        </div> \
+      </div> \
+    </form'); 
+  $j("#name_" + song_id).val(song_name);
+  $j("#artist_" + song_id).val(song_artist);
+  $j("#link_" + song_id).val("http://www.youtube.com/watch?v=" + song_youtube);
+  var youtube_selector = "#youtube_" + song_id;
+  $j(youtube_selector).remove();
+  return;
+};
+
+var cancelEdit = function(song_id, song_name, song_artist, song_youtube, playlist_hash) {
+  var selector = "#edit_" + song_id;
+  if (song_youtube) { 
+    $j(selector).replaceWith('<div class="small-10 columns"> \
+        <h4><img src="/static/img/edit.png"/ onClick="editSong(' + song_id + ',\'' + song_name + '\',\'' + song_artist + '\',\'' + song_youtube + '\',\'' + playlist_hash + '\')"/> ' + song_name + '</h4> \
+        <img src="/static/img/delete.png" onClick="deleteSong(' + song_id + ',\'' + song_name + '\',\'' + song_artist + '\',\'' + playlist_hash + '\')"/><i>by</i> ' + song_artist + ' \
+      </div> \
+      <div id="youtube_' + song_id + '" class="small-1 columns text-center"> \
+        <a data-reveal-id="videoModal_' + song_id + '"><i class="fi-social-youtube youtube"></i></a>  \
+      </div>');
+  } else {
+    $j(selector).replaceWith('<div class="small-10 columns"> \
+        <h4><img src="/static/img/edit.png"/ onClick="editSong(' + song_id + ',\'' + song_name + '\',\'' + song_artist + '\',\'' + song_youtube + '\',\'' + playlist_hash + '\')"/> ' + song_name + '</h4> \
+        <img src="/static/img/delete.png" onClick="deleteSong(' + song_id + ',\'' + song_name + '\',\'' + song_artist + '\',\'' + playlist_hash + '\')"/><i>by</i> ' + song_artist + ' \
+      </div>');
+  }
+}
+
+var deleteSong = function(song_id, song_name, song_artist, playlist_hash) {
+  var r = confirm("Are you sure you want to delete " + song_name + " by " + song_artist + "?");
+  if (r==true) {
+    
+    var id = "#song_" + song_id;
+    $j(id).animate({
+        height:'toggle',
+        opacity: '0'
+      },
+      function() {
+        $j(id).remove();    
+      }
+    );
+    
+    $j.post("/playlists/" + playlist_hash + "/" + song_id +"/delete");
+  }
 };
 
 var checkCookie = function() {

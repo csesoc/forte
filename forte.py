@@ -10,6 +10,10 @@ import string, random, socket, logging
 app = Flask(__name__)
 app.config.from_object('development_config')
 app.config.from_envvar('FORTE_CONFIG')
+if not app.config['DEBUG']:
+  file_handler = logging.FileHandler(filename="logs/production.log")
+  app.logger.setLevel(logging.WARNING)
+  app.logger.addHandler(file_handler)
 mail = Mail(app)
 
 def connect_db():
@@ -83,7 +87,31 @@ def view_playlist(playlist_hash):
     playlist = [dict(name=row[1], description=row[2], hash=row[3]) for row in playlist_obj.fetchall()][0]
     song_obj = g.db.execute('select id, name, artist, youtube, votes from songs where playlist=? order by votes desc',[playlist_id])
     songs = [dict(id=row[0], name=row[1], artist=row[2], youtube=row[3], votes=row[4]) for row in song_obj.fetchall()]
-    return render_template('playlists_view.html', playlist=playlist, songs=songs)
+    return render_template('playlists_view.html', playlist=playlist, songs=songs, server=app.config['SERVER_NAME'])
+
+@app.route('/playlists/<playlist_hash>/<int:song_id>/edit', methods=["POST"])
+def edit_song(playlist_hash, song_id):
+  error = None
+  playlists = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()
+  if len(playlists) == 0:
+    abort(404)
+  playlist_id = playlists[0][0]
+  g.db.execute('update songs set (name, artist, youtube) values (?, ?, ?) where id=?',
+              [request.form['name'], request.form['artist'], request.form['youtube'][-11:], song_id])
+  g.db.commit()
+  return "OK 200"
+
+@app.route('/playlists/<playlist_hash>/<int:song_id>/delete', methods=["POST"])
+def delete_song(playlist_hash, song_id):
+  error = None
+  playlists = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()
+  if len(playlists) == 0:
+    abort(404)
+  playlist_id = playlists[0][0]
+  g.db.execute('delete from songs where id=?', [song_id])
+  g.db.commit()
+  return "OK 200"
+
 
 @app.route('/playlists/<playlist_hash>/<int:song_id>/up/<int:votes>', methods=["POST"])
 def upvote_song(playlist_hash, song_id, votes):
@@ -99,15 +127,11 @@ def downvote_song(playlist_hash, song_id, votes):
   g.db.commit()
   return "OK 200"
 
+
 @app.errorhandler(404)
 def page_not_found(e):
   return render_template('404.html'), 404
 
 if __name__ == '__main__':
-  app.debug = True
-  if not app.debug:
-    file_handler = logging.FileHandler(filename="logs/production.log")
-    app.logger.setLevel(logging.WARNING)
-    app.logger.addHandler(file_handler)
   app.run()
 

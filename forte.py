@@ -89,18 +89,6 @@ def view_playlist(playlist_hash):
     songs = [dict(id=row[0], name=row[1], artist=row[2], youtube=row[3], votes=row[4]) for row in song_obj.fetchall()]
     return render_template('playlists_view.html', playlist=playlist, songs=songs, server=app.config['SERVER_NAME'])
 
-@app.route('/playlists/<playlist_hash>/<int:song_id>/edit', methods=["POST"])
-def edit_song(playlist_hash, song_id):
-  error = None
-  playlists = g.db.execute('select id from playlists where hash=?', [playlist_hash]).fetchall()
-  if len(playlists) == 0:
-    abort(404)
-  playlist_id = playlists[0][0]
-  g.db.execute('update songs set (name, artist, youtube) values (?, ?, ?) where id=?',
-              [request.form['name'], request.form['artist'], request.form['youtube'][-11:], song_id])
-  g.db.commit()
-  return "OK 200"
-
 @app.route('/playlists/<playlist_hash>/<int:song_id>/delete', methods=['GET', 'POST'])
 def delete_song(playlist_hash, song_id):
   error = None

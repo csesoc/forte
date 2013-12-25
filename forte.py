@@ -54,12 +54,12 @@ def new_playlist():
     if request.form['email']:
       emails = request.form['email'].split()
       #Add validation for emails
-      msg = Message("Forte playlist",
+      msg = Message("Forte - New Playlist - " + request.form['name'],
                     sender="noreply@forte.csesoc.unsw.edu.au",
                     recipients=emails)
       # Check for hostname rather than doing this
       # Add a nicer message
-      msg.body = "http://" + app.config['SERVER_NAME'] + "/" + playlist_hash
+      msg.html = "Hello,<br /><br /> You have created a new playlist, " + request.form['name'] + ", with Forte. To view your new playlist, <a href='http://" + app.config['SERVER_NAME'] + "/" + playlist_hash +"'>click here</a>.<br /><br />Thanks,<br /><br />The Forte Team"
       mail.send(msg)
 
     flash('New playlist was created')

@@ -59,7 +59,7 @@ def new_playlist():
                     recipients=emails)
       # Check for hostname rather than doing this
       # Add a nicer message
-      msg.html = "Hello,<br /><br /> You have created a new playlist, " + request.form['name'] + ", with Forte. To view your new playlist, <a href='http://forte.csesoc.com.au/playlist/" + playlist_hash + "'>click here</a>.<br /><br />Thanks,<br /><br />The Forte Team"
+      msg.html = "Hello,<br /><br /> You have created a new playlist, " + request.form['name'] + ", with Forte. To view your new playlist, <a href='http://forte.csesoc.com.au/playlists/" + playlist_hash + "'>click here</a>.<br /><br />Thanks,<br /><br />The Forte Team"
       mail.send(msg)
 
     flash('New playlist was created')

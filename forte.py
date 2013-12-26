@@ -63,7 +63,7 @@ def new_playlist():
       mail.send(msg)
 
     flash('New playlist was created')
-    return redirect('/playlists/' + playlist_hash)
+    return redirect(url_for('view_playlist', playlist_hash=playlist_hash))
   return render_template('playlists_new.html')
 
 @app.route('/playlists/<playlist_hash>', methods=['GET', 'POST'])

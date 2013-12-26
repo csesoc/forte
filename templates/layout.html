@@ -18,13 +18,13 @@
     <div class="wrapper">
       <div class="row">
         <div class="small-5 columns">
-          <a href="/"><h1>Forte</h1></a>
+          <a href="{{ url_for('index') }}"><h1>Forte</h1></a>
         </div>
         <div class="small-7 columns text-right show-for-small-only">
-          <a href="/playlists/new" class="button tiny playListSmall">Create a Playlist</a>
+          <a href="{{ url_for('new_playlist') }}" class="button tiny playListSmall">Create a Playlist</a>
         </div>
         <div class="small-7 columns text-right hide-for-small-only">
-          <a href="/playlists/new" class="button tiny playListLarge">Create a Playlist</a>
+          <a href="{{ url_for('new_playlist') }}" class="button tiny playListLarge">Create a Playlist</a>
         </div>
         <hr>
       </div>

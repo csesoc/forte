@@ -87,8 +87,9 @@ var deleteSong = function(song_id, song_name, song_artist, playlist_hash) {
     
     var id = "#song_" + song_id;
     $j(id).slideUp();
-    
-    $j.post("/playlists/" + playlist_hash + "/" + song_id +"/delete");
+    setTimeout(function() {
+      window.location.replace("/playlists/" + playlist_hash + "/" + song_id +"/delete");
+    }, 500);
   }
 };
 

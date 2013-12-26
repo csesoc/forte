@@ -77,7 +77,7 @@ def view_playlist(playlist_hash):
                  [request.form['name'], request.form['artist'], request.form['youtube'][-11:], 0, playlist_id])
     g.db.commit()
     flash('New song was added')
-    return redirect('/playlists/' + playlist_hash)
+    return redirect(url_for('view_playlist', playlist_hash=playlist_hash))
   else:
     playlist_obj = g.db.execute('select id, name, description, hash from playlists where id=?', [str(playlist_id)])
     playlist = [dict(name=row[1], description=row[2], hash=row[3]) for row in playlist_obj.fetchall()][0]
@@ -93,7 +93,7 @@ def delete_song(playlist_hash, song_id):
   playlist_id = playlists[0][0]
   g.db.execute('delete from songs where id=?', [song_id])
   g.db.commit()
-  return redirect('/playlists/' + playlist_hash)
+  return redirect(url_for('view_playlist', playlist_hash=playlist_hash))
 
 @app.route('/playlists/<playlist_hash>/<int:song_id>/up/<int:votes>', methods=["POST"])
 def upvote_song(playlist_hash, song_id, votes):

@@ -24,9 +24,9 @@ var upvote = function(song_id, playlist_hash, song_votes) {
   }
   change_of_votes = song_votes - original_votes;
   if (change_of_votes > 0) {
-    $j.post("playlists/" + playlist_hash + "/" + song_id + "/up/" + change_of_votes);
+    $j.post(song_id + "/up/" + change_of_votes);
   } else {
-    $j.post("playlists/" + playlist_hash + "/" + song_id + "/down/" + Math.abs(change_of_votes));
+    $j.post(song_id + "/down/" + Math.abs(change_of_votes));
   }
   $j("#votes_" + song_id).text(song_votes);
   sortSongs();
@@ -54,9 +54,9 @@ var downvote = function(song_id, playlist_hash, song_votes) {
   }
   change_of_votes = song_votes - original_votes;
   if (change_of_votes > 0) {
-    $j.post("playlists/" + playlist_hash + "/" + song_id + "/up/" + change_of_votes);
+    $j.post(song_id + "/up/" + change_of_votes);
   } else {
-    $j.post("playlists/" + playlist_hash + "/" + song_id + "/down/" + Math.abs(change_of_votes));
+    $j.post(song_id + "/down/" + Math.abs(change_of_votes));
   }
   $j("#votes_" + song_id).text(song_votes);
   sortSongs();

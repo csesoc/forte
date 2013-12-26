@@ -81,14 +81,14 @@ var sortSongs = function(){
   });
 };
 
-var deleteSong = function(song_id, song_name, song_artist, playlist_hash) {
+var deleteSong = function(song_id, song_name, song_artist, playlist_hash, delete_url) {
   var r = confirm("Are you sure you want to delete " + song_name + " by " + song_artist + "?");
   if (r==true) {
     
     var id = "#song_" + song_id;
     $j(id).slideUp();
     setTimeout(function() {
-      window.location.replace("/playlists/" + playlist_hash + "/" + song_id +"/delete");
+      window.location.replace(delete_url);
     }, 500);
   }
 };

@@ -87,7 +87,8 @@
       <li class="panel nb mix" id="song_{{ song.id }}">
         <div class="row" style="position: relative;">
           <div class="editbuttons">
-            <a onClick="deleteSong({{ song.id }}, '{{ song.name }}', '{{ song.artist }}', '{{ playlist.hash }}', '{{ url_for(\'delete_song\', playlist_hash=playlist.hash, song_id=song.id }}')"><i class="fi-x" style="color:#6e6e6e"></i></a>
+            <script>deleteUrl_{{song.id}} = "{{ url_for('delete_song',playlist_hash=playlist.hash, song_id=song.id) }}";</script>
+            <a onClick="deleteSong({{ song.id }}, '{{ song.name }}', '{{ song.artist }}', '{{ playlist.hash }}', deleteUrl_{{ song.id }} )"><i class="fi-x" style="color:#6e6e6e"></i></a>
           </div>
           <div class="small-1 columns text-center buttonBox">
             <button id="up_{{ song.id }}" type="submit" class="insanelysmall button secondary upvote" onclick="upvote({{ song.id }}, '{{ playlist.hash }}', parseInt($j('#votes_{{ song.id }}').text()))"><i class="fi-like"></i></button>

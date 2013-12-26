@@ -26,14 +26,14 @@
   <div class="large-6 columns">
     <h4>Link:</h4>
     <div class="panel">
-      <p><a href="{{ url_for('view_playlist', playlist_hash=playlist.hash) }}">{{ url_for('view_playlist', playlist_hash=playlist.hash) }}</a></p>
+      <p><a href="http://forte.csesoc.com.au/playlists/{{ playlist.hash }}">http://forte.csesoc.com.au/playlists/{{ playlist.hash }}</a></p>
     </div>
   </div>
   {% else %}
   <div class="small-12 columns">
     <h4>Link:</h4>
     <div class="panel text-center">
-      <p><a href="{{ url_for('view_playlist', playlist_hash=playlist.hash) }}">{{ url_for('view_playlist', playlist_hash=playlist.hash) }}</a></p>
+      <p><a href="http://forte.csesoc.com.au/playlists/{{ playlist.hash }}">http://forte.csesoc.com.au/playlists/{{ playlist.hash }}</a></p>
     </div>
   </div>
   {% endif %}

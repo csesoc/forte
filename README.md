@@ -16,7 +16,7 @@ $ . <environment_name>/bin/activate
 ```
 You'll see in your terminal that it has <environment_name> at the start of the line
 
-### Final part
+### Installing packages
 Run the following
 ```
 $ git clone git@github.com:csesoc/forte.git
@@ -24,17 +24,29 @@ $ cd forte
 $ echo "export FORTE_CONFIG=development_config.py" >> ~/.bashrc
 $ bash
 $ pip install -r requirements.txt
+
+### Database Setup
 $ python
 > from forte import init_db
 > init_db()
 > exit()
 $ sqlite3 forte.db < schema.sql
 ```
-And you're done! To start the server, run
+
+### Email setup
+Open up development_config.py with a text editor and change
+```
+MAIL_USERNAME = 'YOUR_GMAIL_ACCOUNT'
+MAIL_PASSWORD = 'YOUR_GMAIL_PASSWORD'
+```
+to your person email address.
+
+### Running the server
+To start the server, run
 ```
 $ python forte.py
 ```
 Enjoy!
 
-#### PSA: Use 2 space indents (NO TABS)
+#### PSA: Use 2 space indents (NO TABS PLEASE)
 

@@ -97,12 +97,16 @@ def delete_song(playlist_hash, song_id):
 
 @app.route('/playlists/<playlist_hash>/<int:song_id>/up/<int:votes>', methods=["POST"])
 def upvote_song(playlist_hash, song_id, votes):
+  if votes > 2 or votes < 1:
+    abort(404)
   g.db.execute('update songs set votes=votes+? where id=?', [votes, song_id])
   g.db.commit()
   return "OK 200"
 
 @app.route('/playlists/<playlist_hash>/<int:song_id>/down/<int:votes>', methods=["POST"])
 def downvote_song(playlist_hash, song_id, votes):
+  if votes > 2 or votes < 1:
+    abort(404)
   g.db.execute('update songs set votes=votes-? where id=?', [votes, song_id])
   g.db.commit()
   return "OK 200"

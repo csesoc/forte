@@ -9,5 +9,5 @@ MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = '587'
 MAIL_USE_TLS = True
 MAIL_USE_SSL = False
-MAIL_USERNAME = 'csesoc.forte@gmail.com'
-MAIL_PASSWORD = 'Asdfghjkl;'
+MAIL_USERNAME = 'YOUR_GMAIL_ACCOUNT'
+MAIL_PASSWORD = 'YOUR_GMAIL_PASSWORD'

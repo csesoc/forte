@@ -2,13 +2,12 @@ forte
 =====
 ## Developer setup for Ubuntu
 ###Core packages
-You'll need git and pip to set up the project.
 ```
 $ sudo apt-get install git pip sqlite3
 ```
 
 ###Setting up virtualenv
-You only if you work on a lot of Python projects. It's mainly to deal with package dependencies. Not completely necessary, but its a good habit.
+This is only necessay if you work on a lot of Python projects. It's mainly to deal with package dependencies. It's not completely necessary, but its a good habit.
 ```
 $ sudo apt-get install virtualenv
 $ virtualenv <environment_name>
@@ -41,14 +40,14 @@ Open up development_config.py with a text editor and change
 MAIL_USERNAME = 'YOUR_GMAIL_ACCOUNT'
 MAIL_PASSWORD = 'YOUR_GMAIL_PASSWORD'
 ```
-to your person email address.
+to your personal email address.
 
 ### Running the server
 To start the server, run
 ```
 $ python forte.py
 ```
-Enjoy!
+Enjoy! You can access this at http://localhost:5000
 
 #### PSA: Use 2 space indents (NO TABS PLEASE)
 
